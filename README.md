@@ -37,10 +37,11 @@ To pretrain a multispectral foundation model with robust generalization capabili
 
 
 ## Citation
-
+'''
 @article{zhou2025m,
   title={M-SpecGene: Generalized Foundation Model for RGBT Multispectral Vision},
   author={Zhou, Kailai and Yang, Fuqiang and Wang, Shixian and Wen, Bihan and Zi, Chongde and Chen, Linsen and Shen, Qiu and Cao, Xun},
   journal={Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
   year={2025}
 }
+'''
