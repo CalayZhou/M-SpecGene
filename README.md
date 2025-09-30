@@ -1,7 +1,20 @@
 # M-SpecGene
 M-SpecGene: Generalized Foundation Model for RGBT Multispectral Vision (ICCV 2025)
 
+<p align="left">
+  <a href='https://arxiv.org/abs/2507.16318'>
+  <img src='https://img.shields.io/badge/Arxiv-2507.16318-A42C25?style=flat&logo=arXiv&logoColor=A42C25'></a> 
+  <a href='https://huggingface.co/calayzhou/M-SpecGene'>
+  <img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-yellow'></a>
+  <a href='https://visitor-badge.laobi.icu/badge?page_id=calayzhou.M-SpecGene'>
+  <img src="https://visitor-badge.laobi.icu/badge?page_id=calayzhou.M-SpecGene&left_color=gray&right_color=%2342b983"></a> 
+   <a href=''>
+   <img alt="Static Badge" src="https://img.shields.io/badge/https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3Dhh0GhS-2oyM%26t%3D19s?label=youtube">
+   </a>
+  <img src="https://img.shields.io/github/last-commit/CalayZhou/M-SpecGene">
+  <img src="https://img.shields.io/github/release-date/CalayZhou/M-SpecGene">
 
+</p>
 
 
 
