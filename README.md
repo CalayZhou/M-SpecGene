@@ -8,11 +8,10 @@ M-SpecGene: Generalized Foundation Model for RGBT Multispectral Vision (ICCV 202
   <img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-yellow'></a>
   <a href='https://visitor-badge.laobi.icu/badge?page_id=calayzhou.M-SpecGene'>
   <img src="https://visitor-badge.laobi.icu/badge?page_id=calayzhou.M-SpecGene&left_color=gray&right_color=%2342b983"></a> 
-   <a href=''>
+   <a href='https://www.youtube.com/watch?v=4CJct1UalPU'>
    <img alt="Static Badge" src="https://img.shields.io/badge/https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3Dhh0GhS-2oyM%26t%3D19s?label=youtube">
    </a>
   <img src="https://img.shields.io/github/last-commit/CalayZhou/M-SpecGene">
-  <img src="https://img.shields.io/github/release-date/CalayZhou/M-SpecGene">
 
 </p>
 
@@ -136,6 +135,8 @@ e. Evalution or Train on the other datasets
 
 
 ## Citation
+
+If you find this repository useful in your research, please consider giving a star ⭐ and a citation.
 ```
 @article{zhou2025m,
   title={M-SpecGene: Generalized Foundation Model for RGBT Multispectral Vision},
