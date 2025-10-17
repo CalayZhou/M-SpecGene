@@ -65,23 +65,74 @@ python M-SpecGeneTransform_seg.py  # M-SpecGene_VIT-B_seg_transform.pth
 
 ### c) Trained Models for Different RGBT Datasets 
 
-| Task         |    Dataset     |      Trained Models       | Performance |
-|:-------------|:--------------:|:-------------------------:|:-----------:|
-| Detection    |   [KAIST](https://drive.google.com/file/d/1UpIfZkqH1ry-252HVF_iUDXJX3GcYYvR/view?usp=sharing)    |                           |             |
-| Detection  |   [LLVIP](https://drive.google.com/file/d/1vUY8zr5RaQvs0Umz4nQCCU5pEkSkWAtw/view?usp=sharing)    |                           |             | 
-| Detection    |    [FLIR](https://drive.google.com/file/d/1kn4YXlUmKU-OuWwDmXLIbRfWuTJ5-D-P/view?usp=sharing)    |                           |             | 
-| Segmentation | [SemanticRT](https://drive.google.com/file/d/16rrFDl468R3TGp-C3bPkwVSlhElIAh-4/view?usp=sharing) |  [SRT_iter_320000.pth](https://drive.google.com/file/d/1vEuW_a3n7_-IXpphOQnJv5CMZFGW_N9y/view?usp=sharing)  | mIoU 79.84% | 
-| Segmentation   |   [MVSEG](https://drive.google.com/file/d/1AM0ln1ZzDQ_9nHolfMNugyHS6Ls2pHbZ/view?usp=sharing)    | [MVSEG_iter_240000.pth](https://drive.google.com/file/d/1INkxRRygPObU3-WIVx84CT42p_LczXb6/view?usp=sharing) | mIoU 63.02% |
-| Segmentation |    [FMB](https://drive.google.com/file/d/11n_S8SMD2mSzWYw-V8Bhmu_jhnkXAl7-/view?usp=drive_link)     |  [FMB_iter_224000.pth](https://drive.google.com/file/d/1tP1sCzEdBya2G3sWEggglKkxrNX94NGC/view?usp=sharing)  |  mIoU ~60%  |
+| Task         |    Dataset     |                                               Trained Models                                                |  Performance  |
+|:-------------|:--------------:|:-----------------------------------------------------------------------------------------------------------:|:-------------:|
+| Detection    |   [KAIST](https://drive.google.com/file/d/1UpIfZkqH1ry-252HVF_iUDXJX3GcYYvR/view?usp=sharing)    |                                          [KAIST_iter_25000.pth](https://drive.google.com/file/d/11r9a6jzPY3Nc3COGNQFCCN54cMeU27hk/view?usp=sharing)                                           | MR^-2  23.74 |
+| Detection    |   [LLVIP](https://drive.google.com/file/d/1vUY8zr5RaQvs0Umz4nQCCU5pEkSkWAtw/view?usp=sharing)    |                                          [LLVIP_iter_105625.pth](https://drive.google.com/file/d/1aj-StAKpbd_5dq4LDaygLXhn0JHqQZxU/view?usp=sharing)                                          |   mAP 65.3%   | 
+| Detection    |    [FLIR](https://drive.google.com/file/d/1vZy7AncoXVOd4kp1Tc24PzvzidwSgXfq/view?usp=drive_link)    |                                           [FLIR_iter_90000.pth](https://drive.google.com/file/d/1flAlTnelAcnLa60FP38kJJ0o-8Y4a7v6/view?usp=sharing)                                           |   mAP 44.7%   | 
+| Segmentation | [SemanticRT](https://drive.google.com/file/d/16rrFDl468R3TGp-C3bPkwVSlhElIAh-4/view?usp=sharing) |  [SRT_iter_320000.pth](https://drive.google.com/file/d/1vEuW_a3n7_-IXpphOQnJv5CMZFGW_N9y/view?usp=sharing)  |  mIoU 79.84%  | 
+| Segmentation |   [MVSEG](https://drive.google.com/file/d/1AM0ln1ZzDQ_9nHolfMNugyHS6Ls2pHbZ/view?usp=sharing)    | [MVSEG_iter_240000.pth](https://drive.google.com/file/d/1INkxRRygPObU3-WIVx84CT42p_LczXb6/view?usp=sharing) |  mIoU 63.02%  |
+| Segmentation |    [FMB](https://drive.google.com/file/d/11n_S8SMD2mSzWYw-V8Bhmu_jhnkXAl7-/view?usp=drive_link)     |  [FMB_iter_224000.pth](https://drive.google.com/file/d/1tP1sCzEdBya2G3sWEggglKkxrNX94NGC/view?usp=sharing)  |   mIoU ~60%   |
+| SOD          |        |                                                                                                             |               |
 
 
 ## Usage
 ### Pretraining
 code will come soon.
 
+```
+bash tools/dist_train.sh configs/mae/mae_vit-base-p16_8xb512-amp-coslr-500e_in1k_siam.py 8
+```
+
 ### Finetuning
 
 #### 1) RGBT Multispectral Object Detection
+a. dataset preparation
+
+PLease download the   [FLIR](https://drive.google.com/file/d/1vZy7AncoXVOd4kp1Tc24PzvzidwSgXfq/view?usp=drive_link) ,  [LLVIP](https://drive.google.com/file/d/1vUY8zr5RaQvs0Umz4nQCCU5pEkSkWAtw/view?usp=sharing)    and  [KAIST](https://drive.google.com/file/d/1UpIfZkqH1ry-252HVF_iUDXJX3GcYYvR/view?usp=sharing)   datasets to the proposal path.
+```
+# link the dataset (FLIR by default)
+cd det/mmdetection_rgbt
+ln -s /path/to/COCO_FLIR/FLIR_ir  ./data/FLIR/coco
+ln -s /path/to/COCO_FLIR/FLIR_rgb  ./data/FLIR/coco2
+```
+
+b. Installation
+
+Please refer to [mmdetection get_started.md](https://mmdetection.readthedocs.io/en/latest/get_started.html)
+for installation. You can also refer to the [mmdet_env_refer.txt](./det/mmdetection_rgbt/mmdet_env_refer.txt) to check the version.
+```
+# after installation
+cd det/mmdetection_rgbt
+pip install -v -e .
+```
+c.Evalution  (FLIR by default)
+```
+python tools/test.py projects/ViTDet/configs/vitdet_mask-rcnn_vit-b-mae_lsj-100e.py /path/to/FLIR_iter_90000.pth
+```
+
+d.Train (FLIR by default)
+
+Please download the  [M-SpecGene_VIT-B_det_transform.pth](https://drive.google.com/file/d/111OG0Ejv8pd8nLdLs74f1rq7NgvSTd8e/view?usp=sharing), and change the pretrained model path in `projects/ViTDet/configs/vitdet_mask-rcnn_vit-b-mae_lsj-100e.py`
+```
+bash tools/dist_train.sh projects/ViTDet/configs/vitdet_mask-rcnn_vit-b-mae_lsj-100e.py 2
+```
+e. Evalution or Train on the other datasets
+```
+1. change the dataset link in ./data  and data_root (line 7) in projects/ViTDet/configs/lsj-100e_coco-instance_5w.py
+2. change num_classes (FLIR->3, LLVIP->1, KAIST->1) in ./configs/_base_/models/mask-rcnn_r50_fpn.py (line 54 73)
+3. change the name of ann_file in ./projects/ViTDet/configs/lsj-100e_coco-instance_5w.py
+4. train or evalution as above
+```
+For MR^-2 metric evalution on KAIST, please use the `KAISTdevkit-matlab-wrapper` from [MBNet](https://github.com/CalayZhou/MBNet).
+```
+#  MR^-2 metric for KAIST
+1. Please uncommet line 388~406 in  mmdet/evaluation/metrics/coco_metric.py  
+2. change dataset link&root, num_classes, ann_file and run the tool/test.py as above
+3. txt file will be save at data/result 
+4. open the KAISTdevkit-matlab-wrapper and run the demo_test.m
+```
+
 
 
 #### 2) RGBT Multispectral Semantic Segmentation
@@ -93,11 +144,10 @@ a. dataset preparation
 PLease download the  [SemanticRT](https://drive.google.com/file/d/16rrFDl468R3TGp-C3bPkwVSlhElIAh-4/view?usp=sharing),  [MVSEG](https://drive.google.com/file/d/1AM0ln1ZzDQ_9nHolfMNugyHS6Ls2pHbZ/view?usp=sharing) and  [FMB](https://drive.google.com/file/d/11n_S8SMD2mSzWYw-V8Bhmu_jhnkXAl7-/view?usp=drive_link)  datasets to the proposal path.
 ```
 # link the dataset (MVSEG by default)
-cd SEG/mmsegmentation-main-rgbt
+cd seg/mmsegmentation-main-rgbt
 ln -s /path/to/MVSEG_ALL/MVSEG  ./data/ade/ADEChallengeData2016
 ln -s /path/to/MVSEG_ALL/MVSEG_T  ./data/ade/ADEChallengeData2016_T
 ```
-
 b. Installation
 
 Please refer to [mmsegmentation-v1.2.2 get_started.md](https://github.com/open-mmlab/mmsegmentation/blob/v1.2.2/docs/en/get_started.md#installation)
@@ -108,11 +158,9 @@ for installation. You can also refer to the [mmseg_env_refer.txt](./seg/mmsegmen
 cd seg/mmsegmentation-main-rgbt
 pip install -v -e .
 ```
-
-
 c.Evalution  (MVSEG by default)
 ```
-python tools/test.py configs/mae/mae-base_upernet_8xb2-amp-320k_ade20k-768x768.py /path/to/SRT_iter_320000.pth
+python tools/test.py configs/mae/mae-base_upernet_8xb2-amp-320k_ade20k-768x768.py /path/to/MVSEG_iter_240000.pth
 ```
 
 d.Train (MVSEG by default)
@@ -131,7 +179,7 @@ e. Evalution or Train on the other datasets
 /mae-base_upernet_8xb2-amp-320k_ade20k-768x768.py
 4. train or evalution as above
 ```
-
+#### 3) RGBT Multispectral Saliency Object Detection
 
 
 ## Citation
