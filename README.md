@@ -85,7 +85,7 @@ cd pretrain/mmpretrain-main_rgbt
 ln -s /path/to/RGBT_CLEAN_v6/ir  ./data/imagenet
 ln -s /path/to/RGBT_CLEAN_v6/rgb  ./data/imagenet2
 ```
-b.  Preparation
+b. preparation
 
 Please refer to [mmpretrain](https://mmpretrain.readthedocs.io/en/latest/get_started.html) documentation for more detailed installation,
 and download [mae_single_modality_in148w_t48w_vit-b_epoch_400_dual_decoder.pth](https://drive.google.com/file/d/1NCFUir4v_0apbhlHnLRHHiJ64Q7lCkTK/view?usp=sharing) to `./work_dirs/mae_vit-base-p16_8xb512-amp-coslr-500e_in1k_siam/`
@@ -115,7 +115,7 @@ ln -s /path/to/COCO_FLIR/FLIR_ir  ./data/FLIR/coco
 ln -s /path/to/COCO_FLIR/FLIR_rgb  ./data/FLIR/coco2
 ```
 
-b. Installation
+b. installation
 
 Please refer to [mmdetection get_started.md](https://mmdetection.readthedocs.io/en/latest/get_started.html)
 for installation. You can also refer to the [mmdet_env_refer.txt](./det/mmdetection_rgbt/mmdet_env_refer.txt) to check the version.
@@ -124,18 +124,18 @@ for installation. You can also refer to the [mmdet_env_refer.txt](./det/mmdetect
 cd det/mmdetection_rgbt
 pip install -v -e .
 ```
-c. Evalution  (FLIR by default)
+c. evalution  (FLIR by default)
 ```
 python tools/test.py projects/ViTDet/configs/vitdet_mask-rcnn_vit-b-mae_lsj-100e.py /path/to/FLIR_iter_90000.pth
 ```
 
-d. Train (FLIR by default)
+d. train (FLIR by default)
 
 Please download the  [M-SpecGene_VIT-B_det_transform.pth](https://drive.google.com/file/d/111OG0Ejv8pd8nLdLs74f1rq7NgvSTd8e/view?usp=sharing), and change the pretrained model path in `projects/ViTDet/configs/vitdet_mask-rcnn_vit-b-mae_lsj-100e.py`
 ```
 bash tools/dist_train.sh projects/ViTDet/configs/vitdet_mask-rcnn_vit-b-mae_lsj-100e.py 2
 ```
-e. Evalution or Train on the other datasets
+e. evalution or Train on the other datasets
 ```
 1. change the dataset link in ./data  and data_root (line 7) in projects/ViTDet/configs/lsj-100e_coco-instance_5w.py
 2. change num_classes (FLIR->3, LLVIP->1, KAIST->1) in ./configs/_base_/models/mask-rcnn_r50_fpn.py (line 54 73)
@@ -166,7 +166,7 @@ cd seg/mmsegmentation-main-rgbt
 ln -s /path/to/MVSEG_ALL/MVSEG  ./data/ade/ADEChallengeData2016
 ln -s /path/to/MVSEG_ALL/MVSEG_T  ./data/ade/ADEChallengeData2016_T
 ```
-b. Installation
+b. installation
 
 Please refer to [mmsegmentation-v1.2.2 get_started.md](https://github.com/open-mmlab/mmsegmentation/blob/v1.2.2/docs/en/get_started.md#installation)
 for installation. You can also refer to the [mmseg_env_refer.txt](./seg/mmsegmentation-main-rgbt/mmseg_env_refer.txt) to check the version.
@@ -176,19 +176,19 @@ for installation. You can also refer to the [mmseg_env_refer.txt](./seg/mmsegmen
 cd seg/mmsegmentation-main-rgbt
 pip install -v -e .
 ```
-c.Evalution  (MVSEG by default)
+c. evalution  (MVSEG by default)
 ```
 python tools/test.py configs/mae/mae-base_upernet_8xb2-amp-320k_ade20k-768x768.py /path/to/MVSEG_iter_240000.pth
 ```
 
-d.Train (MVSEG by default)
+d. train (MVSEG by default)
 
 Please download the [M-SpecGene_VIT-B_seg_transform.pth](https://drive.google.com/file/d/1xUH48fAqTtznNHh0B_WG04ww5ps0BdNk/view?usp=drive_link), and change the pretrained model path in `configs/mae/mae-base_upernet_8xb2-amp-320k_ade20k-768x768.py`
 ```
 bash tools/dist_train.sh configs/mae/mae-base_upernet_8xb2-amp-320k_ade20k-768x768.py 2
 ```
 
-e. Evalution or Train on the other datasets
+e. evalution or Train on the other datasets
 
 ```
 1. change the dataset link in /dataset/ade/
