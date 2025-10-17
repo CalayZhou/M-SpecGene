@@ -78,11 +78,29 @@ python M-SpecGeneTransform_seg.py  # M-SpecGene_VIT-B_seg_transform.pth
 
 ## Usage
 ### Pretraining
-code will come soon.
+a. RGBT550K dataset
+```
+# link the dataset
+cd pretrain/mmpretrain-main_rgbt
+ln -s /path/to/RGBT_CLEAN_v6/ir  ./data/imagenet
+ln -s /path/to/RGBT_CLEAN_v6/rgb  ./data/imagenet2
+```
+b.  Preparation
 
+Please refer to [mmpretrain](https://mmpretrain.readthedocs.io/en/latest/get_started.html) documentation for more detailed installation,
+and download [mae_single_modality_in148w_t48w_vit-b_epoch_400_dual_decoder.pth](https://drive.google.com/file/d/1NCFUir4v_0apbhlHnLRHHiJ64Q7lCkTK/view?usp=sharing) to `./work_dirs/mae_vit-base-p16_8xb512-amp-coslr-500e_in1k_siam/`
+```
+# after installation
+mim install -e .
+```
+
+
+c. cross-modality self-supervised pretraining
 ```
 bash tools/dist_train.sh configs/mae/mae_vit-base-p16_8xb512-amp-coslr-500e_in1k_siam.py 8
 ```
+
+
 
 ### Finetuning
 
@@ -106,12 +124,12 @@ for installation. You can also refer to the [mmdet_env_refer.txt](./det/mmdetect
 cd det/mmdetection_rgbt
 pip install -v -e .
 ```
-c.Evalution  (FLIR by default)
+c. Evalution  (FLIR by default)
 ```
 python tools/test.py projects/ViTDet/configs/vitdet_mask-rcnn_vit-b-mae_lsj-100e.py /path/to/FLIR_iter_90000.pth
 ```
 
-d.Train (FLIR by default)
+d. Train (FLIR by default)
 
 Please download the  [M-SpecGene_VIT-B_det_transform.pth](https://drive.google.com/file/d/111OG0Ejv8pd8nLdLs74f1rq7NgvSTd8e/view?usp=sharing), and change the pretrained model path in `projects/ViTDet/configs/vitdet_mask-rcnn_vit-b-mae_lsj-100e.py`
 ```
