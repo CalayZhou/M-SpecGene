@@ -135,7 +135,7 @@ Please download the  [M-SpecGene_VIT-B_det_transform.pth](https://drive.google.c
 ```
 bash tools/dist_train.sh projects/ViTDet/configs/vitdet_mask-rcnn_vit-b-mae_lsj-100e.py 2
 ```
-e. evalution or Train on the other datasets
+e. evalution or train on the other datasets
 ```
 1. change the dataset link in ./data  and data_root (line 7) in projects/ViTDet/configs/lsj-100e_coco-instance_5w.py
 2. change num_classes (FLIR->3, LLVIP->1, KAIST->1) in ./configs/_base_/models/mask-rcnn_r50_fpn.py (line 54 73)
@@ -188,7 +188,7 @@ Please download the [M-SpecGene_VIT-B_seg_transform.pth](https://drive.google.co
 bash tools/dist_train.sh configs/mae/mae-base_upernet_8xb2-amp-320k_ade20k-768x768.py 2
 ```
 
-e. evalution or Train on the other datasets
+e. evalution or train on the other datasets
 
 ```
 1. change the dataset link in /dataset/ade/
