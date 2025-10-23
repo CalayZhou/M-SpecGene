@@ -73,7 +73,7 @@ python M-SpecGeneTransform_seg.py  # M-SpecGene_VIT-B_seg_transform.pth
 | Segmentation | [SemanticRT](https://drive.google.com/file/d/16rrFDl468R3TGp-C3bPkwVSlhElIAh-4/view?usp=sharing) |  [SRT_iter_320000.pth](https://drive.google.com/file/d/1vEuW_a3n7_-IXpphOQnJv5CMZFGW_N9y/view?usp=sharing)  |  mIoU 79.84%  | 
 | Segmentation |   [MVSEG](https://drive.google.com/file/d/1AM0ln1ZzDQ_9nHolfMNugyHS6Ls2pHbZ/view?usp=sharing)    | [MVSEG_iter_240000.pth](https://drive.google.com/file/d/1INkxRRygPObU3-WIVx84CT42p_LczXb6/view?usp=sharing) |  mIoU 63.02%  |
 | Segmentation |    [FMB](https://drive.google.com/file/d/11n_S8SMD2mSzWYw-V8Bhmu_jhnkXAl7-/view?usp=drive_link)     |  [FMB_iter_224000.pth](https://drive.google.com/file/d/1tP1sCzEdBya2G3sWEggglKkxrNX94NGC/view?usp=sharing)  |   mIoU ~60%   |
-| SOD          |        |                                                                                                             |               |
+| SOD          |   [VT5000](https://drive.google.com/file/d/1b2lHWzamigAJ6cGG3Uh88hRhcggVDrQm/view?usp=sharing)    |    [VT5000_iter_54000.pth](https://drive.google.com/file/d/1ZW17poat3_9ze8tsZ5Y3jTJFC0Mj4ewx/view?usp=sharing)     |  S 0.892, MAE 0.028  |
 
 
 ## Usage
@@ -197,7 +197,46 @@ e. evalution or train on the other datasets
 /mae-base_upernet_8xb2-amp-320k_ade20k-768x768.py
 4. train or evalution as above
 ```
+
+
 #### 3) RGBT Multispectral Saliency Object Detection
+
+a. dataset preparation
+
+PLease download the  [VT5000](https://drive.google.com/file/d/1b2lHWzamigAJ6cGG3Uh88hRhcggVDrQm/view?usp=sharing),  [VT1000](https://drive.google.com/file/d/1_8FxwWjbK4SdBEMhDlXn_80sa9cO_xPe/view?usp=sharing) ,  [VT821](https://drive.google.com/file/d/12P-8XSZ_D2Aa98xSn0H8vixdx7O7PxnN/view?usp=sharing) and  [VIRGBT-1500](https://drive.google.com/file/d/1mEUNWYOqi9BM2oiB25O-iL5dtcMgnLZf/view?usp=sharing)  datasets to the proposal path.
+```
+# link the dataset (VT5000 by default)
+cd sod/mmsegmentation-main-rgbt
+ln -s /path/to/VT5000_ALL/VT5000  ./data/ade/ADEChallengeData2016
+ln -s /path/to/VT5000_ALL/VT5000_T  ./data/ade/ADEChallengeData2016_T
+```
+b. installation
+
+This part is the same with 2) RGBT Multispectral Semantic Segmentation.
+
+c. evalution  (VT5000 by default)
+```
+1. python tools/test.py configs/mae/mae-base_upernet_8xb2-amp-160k_ade20k-768x768.py /path/to/VT5000_iter_54000.pth --out ./pred_mask/54000/VT5000
+2. cd ../SOD_Evaluation_Metrics-main
+3. cp -r ../mmsegmentation-main-rgbt/pred_mask ./
+4. cp -r /path/to/VT5000_ALL/VT5000/annotations/validation ./gt/VT5000
+4. python 01to0255.py  # To ensure the labels are 0/255 since the SOD_Evaluation_Metrics-main requires the labels to be 0/255 rather than 0/1.(Please change the file path in 01to0255.py)
+5. python main.py  # Please ensure the directory structure in pred_mask/54000 matches that of gt/.
+```
+
+d. train (VT5000 by default)
+
+Please download the [M-SpecGene_VIT-B_seg_transform.pth](https://drive.google.com/file/d/1xUH48fAqTtznNHh0B_WG04ww5ps0BdNk/view?usp=drive_link), and change the pretrained model path in `configs/mae/mae-base_upernet_8xb2-amp-160k_ade20k-768x768.py`
+```
+bash tools/dist_train.sh configs/mae/mae-base_upernet_8xb2-amp-160k_ade20k-768x768.py 2
+```
+
+e. evalution on the other datasets
+
+```
+1. change the dataset link in /dataset/ade/
+2. evalution as above
+```
 
 
 ## Citation
