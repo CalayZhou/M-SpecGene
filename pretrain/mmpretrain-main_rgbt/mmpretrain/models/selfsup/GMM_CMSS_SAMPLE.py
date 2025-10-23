@@ -201,14 +201,5 @@ class GMM_CMSS_SAMPLE:
                 self.sample_range[flag_j] = self.sample_range[flag_j] + self.shift
 
 
-
-            #    self.sample_range[1] = self.sample_range[1] + self.shift
-            print("mean,var,weight", self.GMM_means, self.GMM_covariances, self.GMM_weights)
-            print("self.GMM_weights_log",self.GMM_weights_log,"self.GMM_means_log",self.GMM_means_log)
-            print("self.maskratio_bias",self.maskratio_bias,"self.sample_gmm_bias",self.sample_gmm_bias)
-            print("self.shift",self.shift,"sample_range",self.sample_range,torch.max(noise),torch.min(noise),torch.max(noise2),torch.min(noise2))
-            # print("-----mean_msdi,var_msdi------",mean_msdi,var_msdi,"-----------")
-            # print("-----self.GMM_mean & var_groups------",self.GMM_mean_groups, self.GMM_var_groups,"-----------")
-            # print("------self.epoch,noise_ori,max min",self.epoch,torch.max(noise_ori),torch.min(noise_ori),torch.max(noise2_ori),torch.min(noise2_ori),"---------------")
         return x_masked, mask, ids_restore, \
             x_masked2, mask2, ids_restore2
