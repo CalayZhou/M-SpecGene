@@ -82,7 +82,7 @@ class GMM_CMSS_SAMPLE:
         # sample_x = torch.randn(N, L, device=x.device) * np.sqrt(sample_var) + mean
         return sample_all
 
-    def MSDI_Similarity(self, tensor_1, tensor_2):
+    def CMSS_Similarity(self, tensor_1, tensor_2):
         normalized_tensor_1 = tensor_1 /tensor_1.norm(dim=-1,keepdim=True)
         normalized_tensor_2 = tensor_2 /tensor_2.norm(dim=-1,keepdim=True)
         r_num = torch.sum(normalized_tensor_1 * normalized_tensor_2, dim=1)
@@ -123,7 +123,7 @@ class GMM_CMSS_SAMPLE:
         #cal the corr
         x_flat = x.clone().detach().contiguous().view(N*L,D)
         x2_flat = x2.clone().detach().contiguous().view(N*L,D)
-        msdi_value = self.MSDI_Similarity(x_flat,x2_flat) #N*L
+        msdi_value = self.CMSS_Similarity(x_flat,x2_flat) #N*L
 
         # E step
         msdi_value_np = msdi_value.cpu().numpy()# N*L
@@ -179,14 +179,14 @@ class GMM_CMSS_SAMPLE:
             else:
                 self.sample_gmm_bias = self.sample_gmm_bias_max
 
-            if self.epoch<50:
+            if self.epoch<self.epoch_num//2:
                 sort_indices = np.argsort(self.GMM_means)# small->big [::-1]
                 GMM_means_sort = self.GMM_means[sort_indices]
                 shift_flag = GMM_means_sort[len(self.sample_range)-1] - self.sample_range[-1]
                 if shift_flag<0 and len(self.sample_range)<len(GMM_means_sort):
                     self.sample_range[-1] = GMM_means_sort[len(self.sample_range)-1] #v8.2
                     self.sample_range = self.sample_range + [0.0]
-                self.shift = (np.sum(self.GMM_means) - np.sum(self.sample_range))/(50-self.epoch)
+                self.shift = (np.sum(self.GMM_means) - np.sum(self.sample_range))/(self.epoch_num//2-self.epoch)
                 self.sample_range[-1] = self.sample_range[-1] + self.shift
             else:
                 sort_indices = np.argsort(self.GMM_means)# small->big [::-1]
@@ -197,7 +197,7 @@ class GMM_CMSS_SAMPLE:
                     if self.sample_range[j-1] < GMM_means_sort[-1]:
                         flag_j = j-1
                         break
-                self.shift = (GMM_means_sort[-1]*len(GMM_means_sort) - np.sum(self.sample_range))/(101-self.epoch)
+                self.shift = (GMM_means_sort[-1]*len(GMM_means_sort) - np.sum(self.sample_range))/(self.epoch_num+1-self.epoch)
                 self.sample_range[flag_j] = self.sample_range[flag_j] + self.shift
 
 
