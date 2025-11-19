@@ -88,7 +88,7 @@ class GMM_CMSS_SAMPLE:
         r_num = torch.sum(normalized_tensor_1 * normalized_tensor_2, dim=1)
         r_num = (r_num+1.0)*0.5
         var_tensor_1 = torch.var(tensor_1, dim=1)
-        var_tensor_2 = torch.var(tensor_1, dim=1)
+        var_tensor_2 = torch.var(tensor_2, dim=1)
         r_num = torch.sqrt(r_num)
         measure = r_num / (var_tensor_1*var_tensor_2)
 
